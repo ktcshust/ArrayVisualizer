@@ -642,22 +642,11 @@ public class ArrayVisualizer {
             public void run(){
                 try{
                     for (Sort sort : new Sort[]{
-                            new SelectionSort(),
                             new BubbleSort(),
-                            new InsertionSort(),
-                            new CocktailShaker(),
-                            new ShellSort(),
-                            new MergeSortOOP(),
-                            new MergeSort(),
-                            new WeaveMerge(),
                             new MaxHeapSort(),
                             new QuickSort(),
-                            new CountingSort(),
-                            new TimeSort(4),
-                            new GravitySort(),
                             new RadixLSD(4),
                             new RadixMSD(4),
-                            new BinaryQuickSort(),
                             new RadixLSDInPlace(2),
                             new RadixLSDInPlace(10)}
                         )
@@ -695,27 +684,17 @@ public class ArrayVisualizer {
                     switch (num)
                     {
                         case 0:
-                            sort = new SelectionSort();break;
-                        case 1:
                             sort = new BubbleSort();break;
-                        case 2:
-                            sort = new InsertionSort();break;
-                        case 3:
-                            sort = new DoubleSelection();break;
-                        case 4:
-                            sort = new CocktailShaker();break;
-                        case 5:
-                            sort = new QuickSort();break;
-                        case 6:
-                            sort = new MergeSort();break;
-                        case 7:
-                            sort = new MergeSortOOP();break;
-                        case 8:
-                            sort = new WeaveMerge();break;
-                        case 9:
+                        case 1:
                             sort = new MaxHeapSort();break;
-                        case 10:
-                            sort = new ShellSort();break;
+                        case 2:
+                            sort = new QuickSort();break;
+                        case 3:
+                            sort = new RadixLSD();break;
+                        case 4:
+                            sort = new RadixLSDInPlace();break;
+                        case 5:
+                            sort = new RadixMSD();break;
                         default:
                             sort = null; break;
                     }
@@ -731,67 +710,6 @@ public class ArrayVisualizer {
                 SetSound(false);
                 stoptime = System.nanoTime();
                 running = false;
-            }
-        };
-        sortingThread.start();
-    }
-    
-    public static void ReportDistributiveSort(int n){
-        if(sortingThread != null && sortingThread.isAlive())
-            return;
-        int bas = 10;
-        if(n != 3 && n != 5 && n != 7)
-            if(n != 4)
-                try{bas = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter Base for Sort"));}catch(Exception ex){
-                    Logger.getLogger(ArrayVisualizer.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            else
-                try{bas = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter Size of Partitions"));}catch(Exception ex){
-                    Logger.getLogger(ArrayVisualizer.class.getName()).log(Level.SEVERE, null, ex);
-                }
-        
-        final int base = Math.max(bas, 2);
-        final int num = n;
-        SetSound(true);
-        sortingThread = new Thread(){
-            @Override
-            public void run(){
-        try{
-            refresharray();
-            Sort sort;
-            switch (num) {
-                case 0:
-                    sort = new RadixLSD(base);break;
-                case 1:
-                    sort = new RadixMSD(base);break;
-                case 2:
-                    sort = new RadixLSDInPlace(base);break;
-                case 3:
-                    sort = new BinaryQuickSort();break;
-                case 4:
-                    sort = new GravitySort();break;
-                case 5:
-                    sort = new ShatterSorts(base);break;
-                case 6:
-                    sort = new CountingSort();break;
-                case 7:
-                    sort = new TimeSort(base);break;
-                case 8:
-                    sort = new BogoSort();break;
-                default:
-                    sort = null; break;
-            }
-            if (sort != null)
-            {
-                heading = sort.name();
-                sort.sort(arrayController);
-            }
-        }catch(Exception ex){
-            Logger.getLogger(ArrayVisualizer.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        SetSound(false);
-        stoptime = System.nanoTime();
-        running = false;
             }
         };
         sortingThread.start();
