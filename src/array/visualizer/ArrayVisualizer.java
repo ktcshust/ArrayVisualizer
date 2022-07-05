@@ -25,7 +25,7 @@ public class ArrayVisualizer {
 
     static final JFrame window = new JFrame();
 
-    static ArrayController arrayController = new ArrayController(1000);
+    static ArrayController arrayController = new ArrayController(100);
     static String heading = "";
     static int frames;
     static int snd = 0;
@@ -645,8 +645,8 @@ public class ArrayVisualizer {
                             new BubbleSort(),
                             new MaxHeapSort(),
                             new QuickSort(),
-                            new RadixLSD(4),
-                            new RadixMSD(4),
+                            new RadixLSD(3),
+                            new RadixMSD(3),
                             new RadixLSDInPlace(2),
                             new RadixLSDInPlace(10)}
                         )
@@ -668,8 +668,48 @@ public class ArrayVisualizer {
         };
         sortingThread.start();
     }
-    
     public static void ReportComparativeSort(int n){
+        if(sortingThread != null && sortingThread.isAlive())
+            return;
+        
+        final int num = n;
+        SetSound(true);
+        sortingThread = new Thread(){
+            @Override
+            public void run(){
+                try{
+                    refresharray();
+                    Sort sort;
+                    switch (num)
+                    {
+                    case 0:
+                        sort = new BubbleSort();break;
+                    case 1:
+                        sort = new MaxHeapSort();break;
+                    case 2:
+                        sort = new QuickSort();break;
+                    default:
+                        sort = null; break;
+                } 
+                   if (sort != null)
+                    {
+                        heading = sort.name();
+                        sort.sort(arrayController);
+                    }
+                }catch(Exception ex)
+                {
+                    Logger.getLogger(ArrayVisualizer.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                SetSound(false);
+                stoptime = System.nanoTime();
+                running = false;
+            }
+        };
+        sortingThread.start();
+    }
+    
+    
+    public static void ReportDistributiveSort(int n){
         if(sortingThread != null && sortingThread.isAlive())
             return;
         
@@ -689,12 +729,6 @@ public class ArrayVisualizer {
                             sort = new MaxHeapSort();break;
                         case 2:
                             sort = new QuickSort();break;
-                        case 3:
-                            sort = new RadixLSD();break;
-                        case 4:
-                            sort = new RadixLSDInPlace();break;
-                        case 5:
-                            sort = new RadixMSD();break;
                         default:
                             sort = null; break;
                     }
