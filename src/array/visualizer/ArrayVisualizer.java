@@ -65,8 +65,8 @@ public class ArrayVisualizer {
     static Color COLORSTRAT0col = new Color(0, 204, 0);
     static ArrayList<Color> COLORSTRAT2cols = new ArrayList<Color>();
     
-    static String[] ComparativeSorts = "Selection!Bubble!Insertion!Double Selection!Cocktail Shaker!Quick!Merge!Merge OOP!Weave Merge!Max Heap!Shell".split("!");
-    static String[] DistributiveSorts = "Radix LSD!Radix MSD!Radix LSD In-Place!Binary Quicksort!Gravity!Shatter!Counting!Time!Bogo".split("!");
+    static String[] ComparativeSorts = "Bubble!Quick!Max Heap".split("!");
+    static String[] DistributiveSorts = "Radix LSD!Radix MSD!Radix LSD In-Place".split("!");
     
     static int cx = 0;
     static int cy = 0;
